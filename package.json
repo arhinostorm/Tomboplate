@@ -1,0 +1,26 @@
+{
+  "name": "tomboplate",
+  "version": "0.0.0",
+  "description": "Tomboplate ==========",
+  "main": "index.js",
+  "dependencies": {
+    "grunt": "~0.4.1"
+  },
+  "devDependencies": {
+    "grunt-contrib-watch": "~0.5.1",
+    "grunt": "~0.4.1",
+    "grunt-contrib-uglify": "~0.2.2",
+    "grunt-contrib-compass": "~0.4.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/arhinostorm/Tomboplate.git"
+  },
+  "author": "",
+  "license": "BSD",
+  "readmeFilename": "README.md",
+  "gitHead": "56abe180e3477b72d42bcc17c687f4b70fa778e1"
+}
