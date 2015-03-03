@@ -1,0 +1,175 @@
+$base-font-size: 16px;
+$fix-mqs: false !default;
+$old-ie: false !default;
+
+@function em($px, $base: $base-font-size) 
+{
+  @return ($px / $base) * 1em;
+}
+
+@mixin grid-text($font-size, $line-height, $margin-bottom, $base: $base-font-size)
+{
+  font-size: em($font-size, $base);
+  line-height: em($baseline, $font-size) * $line-height;
+  margin-bottom: em($baseline, $font-size) *  $margin-bottom;
+  
+}
+
+@mixin respond-min($width) 
+{
+  // If we're outputting for a fixed media query set...
+  @if $fix-mqs 
+  {
+    // ...and if we should apply these rules...
+    @if $fix-mqs >= $width 
+    {
+        // ...output the content the user gave us.
+        @content;
+    }
+  }
+  @else 
+  {
+    // Otherwise, output it using a regular media query
+    @media screen and (min-width: $width) 
+    {
+        @content;
+    }
+  }
+}
+
+
+
+@mixin old-ie 
+{
+  // Only use this content if we're dealing with old IE
+  @if $old-ie 
+  {
+      @content;
+  }
+}
+
+
+@mixin prefixed($property, $value) 
+{
+  -webkit-#{$property}: #{$value};
+  -moz-#{$property}: #{$value};
+  -ms-#{$property}: #{$value};
+  -o-#{$property}: #{$value};
+  #{$property}: #{$value};
+}
+
+@mixin hardwareAccel() 
+{
+  // Improve performance on mobile/tablet devices
+  @include prefixed(transform, translateZ(0));
+}
+
+@mixin improveAntiAlias() 
+{
+  // Improve aliasing on mobile/tablet devices
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+}
+
+@mixin fontSmooth() {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@mixin forceBlockLevel() {
+  // Transforms need to be block-level to work
+  //display: inline-block;
+  vertical-align: middle;
+}
+
+@mixin hacks() {
+  @include forceBlockLevel();
+  @include hardwareAccel();
+  @include improveAntiAlias();
+  @include fontSmooth();
+}
+
+@mixin overline-reveal($duration, $bordercolor) 
+{
+
+  @include hacks();
+  position: relative;
+  overflow: hidden;
+  &:before {
+    content: "";
+    position: absolute;
+    z-index: 100;
+    left: 0;
+    right: 0;
+    top: 0;
+    background: $bordercolor;
+    height: 4px;
+    @include prefixed(transform, translateY(-4px));
+    @include prefixed(transition-property, transform);
+    @include prefixed(transition-duration, $duration);
+    @include prefixed(transition-timing-function, ease-out);
+  }
+
+  &:hover,
+  &:focus,
+  &:active {
+
+    &:before {
+     @include prefixed(transform, translateY(0));
+    }
+  }
+}
+
+@mixin underline-reveal($duration, $bordercolor) 
+{
+
+  @include hacks();
+  position: relative;
+  overflow: hidden;
+
+  &:before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: $bordercolor;
+    height: 4px;
+    @include prefixed(transform, translateY(4px));
+    @include prefixed(transition-property, transform);
+    @include prefixed(transition-duration, $duration);
+    @include prefixed(transition-timing-function, ease-out);
+  }
+
+  &:hover,
+  &:focus,
+  &:active {
+
+    &:before {
+     @include prefixed(transform, translateY(0));
+    }
+  }
+}
+
+@mixin hoverblockbottom($hoverduration, $bordercolor)
+{
+  @include underline-reveal($hoverduration, $bordercolor);
+  @include transition-duration($hoverduration);
+  @include transition-property(background);
+}
+
+@mixin hoverblock($hoverduration, $backgroundcolor, $bordercolor, $changebg: "true")
+{
+  @include overline-reveal($hoverduration, $bordercolor);
+  @include transition-duration($hoverduration);
+  @include transition-property(background);
+
+  @if $changebg == "true"
+  {
+    &:hover
+    {
+      background: darken($backgroundcolor, 2%);
+    }
+  }
+}

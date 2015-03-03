@@ -13,7 +13,8 @@
 <!--<![endif]-->
 <head>
   <title>TOMBOPLATE</title>
-  <meta http-equiv="Content-Type" content="text/html; Charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta charset="utf-8"> 
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta property="og:title" content="SITE TITLE" />
   <meta property="og:type" content="website" />
@@ -22,7 +23,16 @@
   <meta name="description" content="DESCRIPTION">
   <meta name="keywords" content="KEYWORDS">
 
-  <link rel="stylesheet" type="text/css" href="css/screen.css" />
+  <!--[if (gt IE 8) | (IEMobile)]><!-->
+      <link rel="stylesheet" type="text/css" href="/css/screen.css" />
+  <!--<![endif]-->
+  <!--[if (lt IE 9) & (!IEMobile)]>
+    <link rel="stylesheet" href="/<?= path_to_theme();?>/css/ie.css">
+  <![endif]-->
+
+
+
+
   <link rel="icon" href="images/favicon.gif" type="image/x-icon"/>
   <link rel="shortcut icon" href="images/favicon.gif" type="image/x-icon"/>
   <script type="text/javascript" src="js/modernizr-2.7.1.min.js"></script>
